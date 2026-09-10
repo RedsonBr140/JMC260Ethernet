@@ -28,6 +28,21 @@ bool JMC260Ethernet::start(IOService *provider) {
 	IOLog("JMC260Ethernet: attached to PCI device %04x:%04x\n",
 		  vendorID,
 		  deviceID);
+	
+	UInt32 bar0 = pciDevice->configRead32(kIOPCIConfigBaseAddress0);
+	UInt32 bar1 = pciDevice->configRead32(kIOPCIConfigBaseAddress1);
+	UInt32 bar2 = pciDevice->configRead32(kIOPCIConfigBaseAddress2);
+	UInt32 bar3 = pciDevice->configRead32(kIOPCIConfigBaseAddress3);
+	UInt32 bar4 = pciDevice->configRead32(kIOPCIConfigBaseAddress4);
+	UInt32 bar5 = pciDevice->configRead32(kIOPCIConfigBaseAddress5);
+	
+	IOLog("JMC260Ethernet: BAR0 = 0x%08x\n", bar0);
+	IOLog("JMC260Ethernet: BAR1 = 0x%08x\n", bar1);
+	IOLog("JMC260Ethernet: BAR2 = 0x%08x\n", bar2);
+	IOLog("JMC260Ethernet: BAR3 = 0x%08x\n", bar3);
+	IOLog("JMC260Ethernet: BAR4 = 0x%08x\n", bar4);
+	IOLog("JMC260Ethernet: BAR5 = 0x%08x\n", bar5);
+
 	return true;
 }
 
