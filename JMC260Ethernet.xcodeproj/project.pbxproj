@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E6C077130533436009CD0AD /* JMC260Registers.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6C077030533436009CD0AD /* JMC260Registers.h */; };
 		6E6C21DD3053030C00068C3A /* JMC260Ethernet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C21DC3053030C00068C3A /* JMC260Ethernet.cpp */; };
 		6E6C21DF3053031400068C3A /* JMC260Ethernet.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6C21DE3053031400068C3A /* JMC260Ethernet.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		32D94FD00562CBF700B6AF17 /* JMC260Ethernet.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JMC260Ethernet.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E6C077030533436009CD0AD /* JMC260Registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMC260Registers.h; path = JMC260Ethernet/JMC260Registers.h; sourceTree = "<group>"; };
 		6E6C21D7305302E100068C3A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = JMC260Ethernet/Info.plist; sourceTree = "<group>"; };
 		6E6C21DA305302FE00068C3A /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = JMC260Ethernet/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6E6C21DC3053030C00068C3A /* JMC260Ethernet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JMC260Ethernet.cpp; path = JMC260Ethernet/JMC260Ethernet.cpp; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			children = (
 				6E6C21DE3053031400068C3A /* JMC260Ethernet.h */,
 				6E6C21DC3053030C00068C3A /* JMC260Ethernet.cpp */,
+				6E6C077030533436009CD0AD /* JMC260Registers.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -76,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E6C21DF3053031400068C3A /* JMC260Ethernet.h in Headers */,
+				6E6C077130533436009CD0AD /* JMC260Registers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

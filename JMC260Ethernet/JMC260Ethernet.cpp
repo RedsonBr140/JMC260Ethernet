@@ -8,7 +8,29 @@
 OSDefineMetaClassAndStructors(JMC260Ethernet, IOService)
 
 UInt32 JMC260Ethernet::readReg32(UInt32 offset) {
+	if (!mmioBase)
+		return 0;
 	return *(volatile UInt32 *)(mmioBase + offset);
+}
+
+void JMC260Ethernet::logMACAddress(UInt32 low, UInt32 high) {
+	UInt8 mac[6];
+	
+	mac[0] = (UInt8)(low & 0xFF);
+	mac[1] = (UInt8)((low >> 8)  & 0xFF);
+	mac[2] = (UInt8)((low >> 16) & 0xFF);
+	mac[3] = (UInt8)((low >> 24) & 0xFF);
+	
+	mac[4] = (UInt8)(high & 0xFF);
+	mac[5] = (UInt8)((high >> 8) & 0xFF);
+	
+	IOLog("JMC260Ethernet: MAC      = %02x:%02x:%02x:%02x:%02x:%02x\n",
+		  (unsigned int)mac[0],
+		  (unsigned int)mac[1],
+		  (unsigned int)mac[2],
+		  (unsigned int)mac[3],
+		  (unsigned int)mac[4],
+		  (unsigned int)mac[5]);
 }
 
 bool JMC260Ethernet::start(IOService *provider) {
@@ -34,8 +56,8 @@ bool JMC260Ethernet::start(IOService *provider) {
 	UInt16 deviceID = pciDevice->configRead16(kIOPCIConfigDeviceID);
 	
 	IOLog("JMC260Ethernet: attached to PCI device %04x:%04x\n",
-		  vendorID,
-		  deviceID);
+		  (unsigned int)vendorID,
+		  (unsigned int)deviceID);
 	
 	UInt32 bar0 = pciDevice->configRead32(kIOPCIConfigBaseAddress0);
 	UInt32 bar1 = pciDevice->configRead32(kIOPCIConfigBaseAddress1);
@@ -44,12 +66,18 @@ bool JMC260Ethernet::start(IOService *provider) {
 	UInt32 bar4 = pciDevice->configRead32(kIOPCIConfigBaseAddress4);
 	UInt32 bar5 = pciDevice->configRead32(kIOPCIConfigBaseAddress5);
 	
-	IOLog("JMC260Ethernet: BAR0 = 0x%08x\n", bar0);
-	IOLog("JMC260Ethernet: BAR1 = 0x%08x\n", bar1);
-	IOLog("JMC260Ethernet: BAR2 = 0x%08x\n", bar2);
-	IOLog("JMC260Ethernet: BAR3 = 0x%08x\n", bar3);
-	IOLog("JMC260Ethernet: BAR4 = 0x%08x\n", bar4);
-	IOLog("JMC260Ethernet: BAR5 = 0x%08x\n", bar5);
+	IOLog("JMC260Ethernet: BAR0 = 0x%08x\n",
+		  (unsigned int)bar0);
+	IOLog("JMC260Ethernet: BAR1 = 0x%08x\n",
+		  (unsigned int)bar1);
+	IOLog("JMC260Ethernet: BAR2 = 0x%08x\n",
+		  (unsigned int)bar2);
+	IOLog("JMC260Ethernet: BAR3 = 0x%08x\n",
+		  (unsigned int)bar3);
+	IOLog("JMC260Ethernet: BAR4 = 0x%08x\n",
+		  (unsigned int)bar4);
+	IOLog("JMC260Ethernet: BAR5 = 0x%08x\n",
+		  (unsigned int)bar5);
 
 	pciDevice->setMemoryEnable(true);
 	mmioMap = pciDevice->mapDeviceMemoryWithRegister(kIOPCIConfigBaseAddress0);
@@ -82,6 +110,8 @@ bool JMC260Ethernet::start(IOService *provider) {
 	
 	IOLog("JMC260Ethernet: RXUMA_HI = 0x%08x\n",
 		  (unsigned int)rxumaHi);
+	
+	logMACAddress(rxumaLo, rxumaHi);
 
 	IOLog("JMC260Ethernet: GHC      = 0x%08x\n",
 		  (unsigned int)ghc);
